@@ -4,29 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEditor;
-using TMPro;
 
 public class MenuUIHandler : MonoBehaviour
 {
-    public TMP_InputField getName;
-    public static string bestPlayer;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void StartGame()
     {
         SceneManager.LoadScene(1);
-        bestPlayer = getName.text;
     }
 
     public void QuitGame()
@@ -36,5 +20,14 @@ public class MenuUIHandler : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    public void StorePlayerName(string inputName)
+    {
+        // Store Player Name
+        // input = inputName
+        Debug.Log(inputName);
+
+        MainManager.Instance.playerName = inputName;
     }
 }

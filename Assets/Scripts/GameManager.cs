@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public Rigidbody Ball;
 
     public Text ScoreText;
-    public Text bestScore;
     public GameObject GameOverText;
 
     private bool m_Started = false;
@@ -36,8 +35,6 @@ public class GameManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
-        
-        bestScore.text = "Best Score: " + MenuUIHandler.bestPlayer + " : 0";
     }
 
     private void Update()
@@ -74,5 +71,25 @@ public class GameManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+        CheckBestPlayer();
+    }
+
+    // CHECK IF THE PAST RECORD IS BROKEN
+    void CheckBestPlayer()
+    {
+        // IF PLAYER BEATS HIGH SCORE, SAVE THE NAME AND HIGH SCORE
+        if (m_Points > MainManager.Instance.highScore)
+        {
+            // Set MainManager to the new high score , as well as the name.
+            MainManager.Instance.highScore = m_Points;
+            MainManager.Instance.highScoreName = MainManager.Instance.playerName;
+
+            // This is the actual function that does the saving to MainManager
+            MainManager.Instance.SaveHighScore(MainManager.Instance.highScore, 
+                MainManager.Instance.highScoreName);
+
+            // Debug Log for testing
+            Debug.Log("New high score: " + MainManager.Instance.highScore);
+        }
     }
 }
